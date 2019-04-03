@@ -1,27 +1,23 @@
 import React from 'react';
 import './Card.css';
-import placeholder from '../../placeholder.png'
+import placeholder from '../../placeholder.png' //Image par défaut dans le cas ou l'APi n'en fournirait pas
 
 class Card extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      backdrop_path : placeholder // Ceci définit une image par défaut si jamais l'api ne fournit pas d'image
-    }
-  }
-
   render(){
+    // Ceci définit une image par défaut si jamais l'api ne fournit pas d'image
+    const image = this.props.movie.backdrop_path === null ? placeholder : this.props.movie.backdrop_path;
+    // console.log("Card render, this.state :", this.state)
+    // console.log("Card render, this.props :", this.props)
     return(
-      <div>
+      <button className="btn btn-outline-success my-card" onClick={() => this.props.onClick(this.props.movie.id)}>
         <div className="title">
           <h4>{this.props.movie.title}</h4>
         </div>
         <div>
-          <img className="img-fluid rounded" src={`https://image.tmdb.org/t/p/w500${this.props.movie.backdrop_path}`} alt={`${this.props.movie.title}`}/>
+          <img className="img-fluid rounded" src={`https://image.tmdb.org/t/p/w500${image}`} alt={`${this.props.movie.title}`}/>
         </div>
-      </div>
+      </button>
     )
   }
 }

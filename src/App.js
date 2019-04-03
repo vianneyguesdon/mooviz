@@ -4,7 +4,7 @@ import Discover from "./components/Discover";
 import Popular from "./components/Popular";
 import MyList from "./components/MyList";
 import "./bootstrap.min.css";
-import "./App.css"
+import "./App.css";
 
 class App extends React.Component {
 
