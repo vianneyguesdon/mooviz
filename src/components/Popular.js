@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../components/movie/Card';
+import config from '../config';
 
 class Popular extends React.Component {
 
@@ -8,9 +9,7 @@ class Popular extends React.Component {
 
     this.state = {
       movies: [],
-      currentPage: 1,
-      displayedMov: [],
-      myList: [],
+      currentMovie: 0,
     }
 
     this.onClickMovie = this.onClickMovie.bind(this);
@@ -19,48 +18,60 @@ class Popular extends React.Component {
 
   // Ceci permet de faire appel à une api (asynchrone)
   componentDidMount() {
-    const apiKey = "api_key=0da4cec8cd7c7f9e6892097255ca707c"
-    const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&${apiKey}`;
+    // console.log(config.API_KEY) // Ici on importe la clef API contenue dans config.js (CONSTANTE)
+    const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&${config.API_KEY}`;
     fetch(url)
       .then (res => res.json())
-      .then (json => {
-        // console.log("json",json.results)
+      .then (data => {
+        // console.log("data",data.results)
     
         this.setState({
-          movies: json.results
+          movies: data.results
         })
       });
   }
 
-  saveToLocalStorage(movieId) {
-    console.log(">>saveToLocalStorage")
-    const myList = this.state.myList
-    this.setState({
-      myList
-    })
-    console.log("<< saveToLocalStorage myList", myList)
-  }
-
   onClickMovie(movieId) {
 
-    // 1) Incrémentation du currentPage de 2 à chaque click
+    // 1) Incrémentation du currentMovie de 2 à chaque click
     console.log(">>onClickMovie")
     console.log("moviesId", movieId)
-    let currentPage = this.state.currentPage
-    currentPage = currentPage + 2
+    const currentMovie = this.state.currentMovie + 2
 
     this.setState({
-      currentPage
+      currentMovie
     });
 
     // 2) Je lance la fonction this.saveToLocalStorage qui va effectuer une autre action
     this.saveToLocalStorage(movieId)
-    // console.log("currentPage", currentPage)
+    // console.log("currentMovie", currentMovie)
+  }
+
+  saveToLocalStorage(movieId) {
+
+    //On push les ID des films dans l'array
+    console.log(">>saveToLocalStorage")
+    console.log("movieId", movieId)
+    
+    //Récupérer les films contenu dans le localstorage
+    let myList = localStorage.getItem('myList');
+    myList = JSON.parse(myList);
+
+    // Ajouter les nouveaux films au local storage
+    myList.push(movieId)
+
+    // Enlever les doublons du localstorage
+    let uniqueMovies = [...new Set(myList)]
+    console.log("unique", uniqueMovies)
+    myList = uniqueMovies
+
+    // Pour sauvegarder cette liste dans la totalité de l'application (App), on le stocke dans le local storage
+    localStorage.setItem("myList", JSON.stringify(myList))
   }
 
   render() {
     // console.log("this.state.movies", this.state.movies)
-    let displayedMov = this.state.movies.slice((this.state.currentPage-1),(this.state.currentPage+1))
+    let displayedMov = this.state.movies.slice((this.state.currentMovie),(this.state.currentMovie + 2))
     // console.log("displayedMov", displayedMov)
 
     return(
@@ -69,8 +80,11 @@ class Popular extends React.Component {
           {displayedMov.map((movie, index) => {
             // console.log(movie)
             return(
-              <div key={index} className="col-6">
-                  <Card movie={movie} onClick={this.onClickMovie}/>
+              <div key={movie.id} className="col-6"> 
+                  <Card 
+                    movie={movie} // On fait passer le movie en entier pour pouvoir récupérer tout l'objet
+                    onClick={this.onClickMovie}
+                  />
               </div>
             );
           })}
