@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from '../components/movie/Card';
 import config from '../config';
+import vs from '../vs.png';
+import './Popular.css'
 
 class Popular extends React.Component {
 
@@ -13,10 +15,9 @@ class Popular extends React.Component {
     }
 
     this.onClickMovie = this.onClickMovie.bind(this);
-    this.saveToLocalStorage = this.saveToLocalStorage.bind(this)
   }
 
-  // Ceci permet de faire appel à une api (asynchrone)
+  // Appel à une api (asynchrone)
   componentDidMount() {
     // console.log(config.API_KEY) // Ici on importe la clef API contenue dans config.js (CONSTANTE)
     const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&${config.API_KEY}`;
@@ -48,26 +49,24 @@ class Popular extends React.Component {
   }
 
   saveToLocalStorage(movieId) {
-
-    //On push les ID des films dans l'array
-    console.log(">>saveToLocalStorage")
-    console.log("movieId", movieId)
+    // console.log(">>saveToLocalStorage")
+    // console.log("movieId", movieId)
     
     //Récupérer les films contenu dans le localstorage
-    let myList = localStorage.getItem('myList');
-    myList = JSON.parse(myList);
-
-    // Ajouter les nouveaux films au local storage
-    myList.push(movieId)
-
-    // Enlever les doublons du localstorage
-    let uniqueMovies = [...new Set(myList)]
-    console.log("unique", uniqueMovies)
-    myList = uniqueMovies
-
+    const storageStr = localStorage.getItem('myList');
+    let myList = [];
+    if (storageStr !== null) {
+      myList = JSON.parse(storageStr);
+    }
+    // On ajoute le movie dans l'array uniquement si il n'y est pas déjà
+    if (myList.includes(movieId) === false) {
+      myList.push(movieId);
+    } 
     // Pour sauvegarder cette liste dans la totalité de l'application (App), on le stocke dans le local storage
     localStorage.setItem("myList", JSON.stringify(myList))
   }
+
+
 
   render() {
     // console.log("this.state.movies", this.state.movies)
@@ -77,10 +76,11 @@ class Popular extends React.Component {
     return(
       <div className="container">
         <div className="row">
+          <img src={`${vs}`} className="img-vs" alt="vs"/>
           {displayedMov.map((movie, index) => {
             // console.log(movie)
             return(
-              <div key={movie.id} className="col-6"> 
+              <div key={movie.id} className="col-5 offset-1"> 
                   <Card 
                     movie={movie} // On fait passer le movie en entier pour pouvoir récupérer tout l'objet
                     onClick={this.onClickMovie}
