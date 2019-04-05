@@ -1,6 +1,6 @@
 .nav {
   height: 100px;
-  margin-top: -420px;
+  margin-top: -370px;
 }
 
 a.nav-link {
@@ -11,6 +11,19 @@ a.nav-link {
   font-size: 80px;
   color: white;
   margin-left: 20px;
+}
+
+.logo-mooviz {
+  margin-left: 600px;
+  margin-top: 30px;
+  padding-left: -500px;
+  font-family: Dokdo;
+  font-size: 80px;
+  color: #083D77;
+}
+
+.global-heigh {
+  min-height: 100vh;
 }
 
 .btn-outline-danger {
@@ -37,9 +50,6 @@ a.nav-link {
   outline: none;
 }
 
-
-
-
 textarea:focus,
 input:focus,
 .btn:focus {
@@ -50,6 +60,7 @@ input:focus,
 
 /* Fonds de couleur */
 .colored {
+  margin-top: -140px;
   height: 500px;
   background-image: linear-gradient(to right bottom, #37cbc5, #00b6da, #009df4, #007dff, #124deb);
   -webkit-clip-path: polygon(0 0, 48% 0, 11% 31%, 0% 100%);
@@ -70,10 +81,10 @@ input:focus,
 
 .img-float2 {
   position: absolute;
-  margin-top: -1000px;
-  margin-left: 900px;
+  margin-top: -1275px;
+  margin-left: 20px;
   box-sizing: border-box;
-  height: 250px;
+  height: 160px;
   z-index: 1;
   animation: floating2 9s ease-in-out 0s infinite alternate;
 }

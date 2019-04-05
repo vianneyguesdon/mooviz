@@ -6,7 +6,7 @@ class Card extends React.Component {
   render() {
     // Ceci définit une image par défaut si jamais l'api ne fournit pas d'image
     const image = this.props.movie.poster_path === null ? placeholder : `https://image.tmdb.org/t/p/w300${this.props.movie.poster_path}`;
-    console.log(this.props.movie.title)
+    // console.log(this.props.movie.title)
     return(
       <button className="btn btn-outline-danger my-card" onClick = {() => this.props.onClick(this.props.movie.id)}>
         <div className="title">

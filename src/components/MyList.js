@@ -31,7 +31,7 @@ class MyList extends React.Component{
       // receives an array of responses
       moviesList.forEach(movieId => {
         // console.log('<< promiseAll movieId', movieId);
-        console.log("<< moviesList", moviesList)
+        // console.log("<< moviesList", moviesList)
         this.setState ({
           moviesList
         })
@@ -48,19 +48,31 @@ class MyList extends React.Component{
   }
 
   onClickCard (movieId) {
-    console.log("<< onClickCard")
-    console.log("movieId onClick", movieId)
-    console.log("moviesList onClick", this.state.moviesList)
+    // console.log("<< onClickCard")
+    console.log("movieId onClick MyList", movieId)
+    // console.log("moviesList onClick", this.state.moviesList)
     
-    const filteredItems = this.state.listOfIds.filter(listOfIds => listOfIds !== movieId)
+    // Je filtre le tableau listOfIds. Chaque élément du tableau est une ID. Je compare l'Id et le movieId.
+    const filteredItems = this.state.listOfIds.filter(Id => Id !== movieId)
     this.setState ({
       listOfIds : filteredItems
     })
-    localStorage.removeItem(movieId);
+
+    // J'applique la méthode filter sur le tableau d'objets moviesList. Cette méthode retourne un film du tableau. 
+    // Pour chaque film, je compare l'id de ce film avec l'Id du movie cliqué. 
+    // On retourne un tableau contenant les éléments !== (possible de retourner 1 élément avec ===)
+    const filteredMovies = this.state.moviesList.filter(movie => movie.id !== movieId)
+    this.setState ({
+      moviesList : filteredMovies
+    })
+
+    //Je réécris le local storage avec le nouveau tableau, qui doit être stringifié
+    localStorage.setItem("myList", JSON.stringify(this.state.listOfIds));
+    console.log(localStorage)
   }
 
   render(){
-    console.log("this.state", this.state)
+    // console.log("this.state", this.state)
     console.log("moviesList in MyListrender", this.state.moviesList)
     console.log("listOfIds in MyListrender", this.state.listOfIds)
     return(

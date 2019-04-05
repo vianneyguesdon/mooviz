@@ -36,15 +36,15 @@ class Discover extends React.Component {
   }
 
   onClickMovie(movieId) {
-    console.log("<< onClickMovie")
-    console.log("moviesId", movieId)
+    // console.log("<< onClickMovie")
+    console.log("onClick Discover moviesId", movieId)
 
     this.saveToLocalStorage(movieId)
   }
 
   saveToLocalStorage(movieId) {
-    console.log(">>saveToLocalStorage")
-    console.log("movieId", movieId)
+    // console.log(">>saveToLocalStorage")
+    // console.log("movieId", movieId)
     
     //Récupérer les films contenu dans le localstorage
     const storageStr = localStorage.getItem('myList');

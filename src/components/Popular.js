@@ -35,8 +35,8 @@ class Popular extends React.Component {
   onClickMovie(movieId) {
 
     // 1) Incrémentation du currentMovie de 2 à chaque click
-    console.log(">>onClickMovie")
-    console.log("moviesId", movieId)
+    // console.log(">>onClickMovie")
+    console.log("onClickMovie moviesId", movieId)
     const currentMovie = this.state.currentMovie + 2
 
     this.setState({

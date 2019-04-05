@@ -12,7 +12,8 @@ class App extends React.Component {
   render() {
     return(
       <Router>
-        <div>
+        <div className="global-heigh">
+        <h1 className="logo-mooviz">Mooviz</h1>
           <div className="colored"></div>
           {/* <i class="fas fa-film logo"></i> */}
           <nav>
