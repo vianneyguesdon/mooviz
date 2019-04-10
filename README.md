@@ -1,5 +1,4 @@
 # MooviZ
-built in ReactJS
 
 Application using the Movie DB API.
 
